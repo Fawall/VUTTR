@@ -14,17 +14,11 @@ namespace src.Models
 
         [Required(ErrorMessage = "This Field can't null ")]
         [StringLength(32, ErrorMessage = "Limit this field exceeded: Limit is 32")]
-        private string Title {get; set;}
-        private string? Link { get; set; }      
+        public string Title {get; set;}
+        public string? Link { get; set; }      
    
-        public List<Tags>? Tags {get; set;}
+        public string[] Tags { get; set; }
 
-        public Tools(string title, string link, List<Tags> tags)
-        {
-            Title = title;
-            Link = link;
-            Tags = tags;
-        }
         public Tools(string title, string link)
         {
             Title = title;
@@ -36,6 +30,8 @@ namespace src.Models
             Title = title;
         }
 
+        public Tools()
+        {  }
 
 
     }
