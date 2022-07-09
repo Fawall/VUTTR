@@ -17,7 +17,10 @@ namespace src.Models
         [Required(ErrorMessage = "This Field can't null ")]
         [StringLength(32, ErrorMessage = "Limit this field exceeded: Limit is 32")]
         public string? Title {get; set;}
-        public string? Link { get; set; }      
+        public string? Link { get; set; }  
+
+        [StringLength(290, ErrorMessage = "Limit this field exceed: Limit is 290")]
+        public string? Description {get; set;}    
 
         public string[]? Tags {get; set;}
 

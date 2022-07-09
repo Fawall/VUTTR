@@ -34,6 +34,7 @@ namespace src.Controllers
                 Id = tools.ToolsId,
                 Title = tools.Title,
                 Link = tools.Link,
+                Description = tools.Description,
                 Tags = tools.Tags
             };
 
