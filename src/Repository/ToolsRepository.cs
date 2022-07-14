@@ -39,7 +39,6 @@ namespace src.Repository
             var tool = await _context.Tools.FindAsync(id);
 
             return tool;
-
      
         }
     }
