@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace src.Models
 {
     public class Tools
     {
         [Key]
-        [JsonIgnore]
-        public int ToolsId {get; set;}
+        public int ToolsId { get; private set; }
 
         [Required(ErrorMessage = "This Field can't null ")]
         [StringLength(32, ErrorMessage = "Limit this field exceeded: Limit is 32")]
@@ -23,6 +23,8 @@ namespace src.Models
         public string? Description {get; set;}    
 
         public string[]? Tags {get; set;}
+
+        
 
 
     }
