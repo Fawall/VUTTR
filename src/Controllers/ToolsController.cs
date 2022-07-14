@@ -5,10 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using src.Context;
 using src.Models;
-using src.ViewModel;
+using src.Repository.Interfaces;
 
 namespace src.Controllers
 {
@@ -18,29 +17,36 @@ namespace src.Controllers
     public class ToolsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public ToolsController(ApplicationDbContext context)
+        private readonly IToolsRepository _toolsRepository;
+        public ToolsController(ApplicationDbContext context, IToolsRepository toolsRepository)
         {
             _context = context;
+            _toolsRepository = toolsRepository;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Tags(Tools tools)
+        public async Task<IActionResult> Tools(Tools tools)
         {
+            var addTool = await _toolsRepository.AddTool(tools);
+            return Ok(addTool);
+        }
 
-            await _context.Tools.AddAsync(tools);
-            await _context.SaveChangesAsync();
+        [HttpGet]
+        public async Task<List<Tools>> Tools()
+        {
+            var listTools =  await _toolsRepository.GetAllTools();
 
-            ResultViewModel resultVM = new ResultViewModel{
-                Id = tools.ToolsId,
-                Title = tools.Title,
-                Link = tools.Link,
-                Description = tools.Description,
-                Tags = tools.Tags
-            };
-
-            return Ok(resultVM);
+            return listTools;
+        }
 
 
+        [HttpGet("id")]
+        public async Task<IActionResult> Tools(int id)
+        {
+            var tool = await _toolsRepository.GetToolsWithId(id);
+            if(tool != null)
+                return Ok(tool);
+            return NotFound();
         }
     }
 }
